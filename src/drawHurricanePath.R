@@ -52,4 +52,5 @@ ggmap(storm.map) +
     geom_polygon(aes(x=long, y=lat, group=id), 
                  data=storm.path.to.display,
                  color="red",fill="yellow", alpha=0.2,size=0.3) +
-    theme_nothing()
+    ggtitle("Hurricane Sandy Forecast Path as of 10/28/2012") +
+    theme(legend.position="none")
