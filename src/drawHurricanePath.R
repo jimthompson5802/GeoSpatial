@@ -8,10 +8,10 @@ library(maptools)
 library(rgeos)
 library(raster)
 
-# function to draw forecasted hurrican path on Google Map
-cropHurricanePath <- function(the.map,storm.path) {
+# function to crop spatial data to bounding box of a Google Map
+cropToMap <- function(the.map,spatial.data) {
     # the.map - Google map to crop the storm path to
-    # storm.path - Spatial data from forcasted storm path downloaded form NHC
+    # spatial.data - Spatial data to display on map
     
     
     # calculate bounding box for displaying storm path
@@ -25,12 +25,12 @@ cropHurricanePath <- function(the.map,storm.path) {
     CP <- as(extent(bb$ll.lon, bb$ur.lon, bb$ll.lat, bb$ur.lat), "SpatialPolygons")
     proj4string(CP) <- CRS("+proj=longlat +datum=WGS84")  # project string for Google Maps
     
-    # apply cropping to storm path data
-    crop.storm.path <- gIntersection(storm.path, CP, byid=TRUE)
-    crop.storm.path <- fortify(crop.storm.path)
+    # apply cropping to spatial data
+    crop.spatial.data <- gIntersection(spatial.data, CP, byid=TRUE)
+    crop.spatial.data <- fortify(crop.spatial.data)
 
-    # return the cropped storm path
-    invisible(crop.storm.path)
+    # return the cropped spatial data
+    invisible(crop.spatial.data)
 
     
 }
