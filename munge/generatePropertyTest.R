@@ -5,6 +5,7 @@
 library(ggmap)
 library(ggplot2)
 library(maptools)
+library(sp)
 
 
 
@@ -50,8 +51,12 @@ generatePropertyData <- function(sp) {
     
     # get coordinates for the polygon defintion
     coords <- attr(polygon,"coords")
+    colnames(coords) <- c("long","lat")
     
-    return(coords)
+    location.points <- SpatialPoints(coords,proj4string="+proj=longlat +datum=WGS84")
+    
+    invisible(location.points)
 }
 
 ll <- lapply(attr(counties.of.interest,"polygons"), generatePropertyData)
+
