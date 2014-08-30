@@ -33,7 +33,7 @@ drawHurricanePath <- function(location="Washington, DC",zoom=4,storm.path) {
     # generate map with storm path
     ggmap(storm.map) +
         geom_polygon(aes(x=long, y=lat, group=id), 
-                     data=subset(crop.storm.path,id=0),
+                     data=crop.storm.path,
                      color="red",fill="yellow", alpha=0.2,size=0.3) +
         theme_nothing()
 
@@ -46,4 +46,4 @@ storm.cone <- readShapeSpatial("./nhcdata/al182012_5day_025/al182012.025_5day_pg
                                proj4string = CRS("+proj=longlat +datum=WGS84"))
 # get only the 72-hour forecast
 storm.path <- subset(storm.cone,FCSTPRD==72)
-drawHurricanePath("arlington, va", 6,storm.path)
+drawHurricanePath("arlington, va", 5,storm.path)
