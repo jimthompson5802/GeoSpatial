@@ -9,14 +9,13 @@ library(rgeos)
 library(raster)
 
 # function to draw forecasted hurrican path on Google Map
-drawHurricanePath <- function(location="Washington, DC",zoom=4,storm.path) {
+cropHurricanePath <- function(the.map,storm.path) {
+    # the.map - Google map to crop the storm path to
     # storm.path - Spatial data from forcasted storm path downloaded form NHC
     
-    # generate mape at requested location and zoom level
-    storm.map <- get_map(location,zoom=zoom)
     
     # calculate bounding box for displaying storm path
-    bb <- attr(storm.map,"bb")
+    bb <- attr(the.map,"bb")
     
     # adjust bounding box to make it slightly smaller than map 
     epsilon <- 1e-6   
@@ -30,12 +29,8 @@ drawHurricanePath <- function(location="Washington, DC",zoom=4,storm.path) {
     crop.storm.path <- gIntersection(storm.path, CP, byid=TRUE)
     crop.storm.path <- fortify(crop.storm.path)
 
-    # generate map with storm path
-    ggmap(storm.map) +
-        geom_polygon(aes(x=long, y=lat, group=id), 
-                     data=crop.storm.path,
-                     color="red",fill="yellow", alpha=0.2,size=0.3) +
-        theme_nothing()
+    # return the cropped storm path
+    invisible(crop.storm.path)
 
     
 }
@@ -44,6 +39,17 @@ drawHurricanePath <- function(location="Washington, DC",zoom=4,storm.path) {
 # retieve storm path shapefile
 storm.cone <- readShapeSpatial("./nhcdata/al182012_5day_025/al182012.025_5day_pgn.shp",
                                proj4string = CRS("+proj=longlat +datum=WGS84"))
+
+# generate mape at requested location and zoom level
+storm.map <- get_map("arlington, va",6)
+
 # get only the 72-hour forecast
 storm.path <- subset(storm.cone,FCSTPRD==72)
-drawHurricanePath("arlington, va", 5,storm.path)
+storm.path.to.display <- cropHurricanePath(storm.map,storm.path)
+
+# generate map with storm path
+ggmap(storm.map) +
+    geom_polygon(aes(x=long, y=lat, group=id), 
+                 data=storm.path.to.display,
+                 color="red",fill="yellow", alpha=0.2,size=0.3) +
+    theme_nothing()
