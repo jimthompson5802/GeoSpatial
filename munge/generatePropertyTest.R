@@ -85,6 +85,7 @@ ggmap(this.map) +
     theme_nothing()
 
 # Save property locations for analysis
-save(property.locations,file="./data/property_locations.RData")
+property.df <- subset(df,select=-col)
+save(property.df,file="./data/property_locations.RData")
 
 
