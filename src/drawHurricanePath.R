@@ -93,7 +93,7 @@ ggmap(ec) +
     geom_polygon(aes(x=long, y=lat, group=id), 
                  data=storm.path.to.display,
                  color="red",fill="yellow", alpha=0.2,size=0.3) +
-    ggtitle("Hurricane Sandy 3-Day Forecast Path as of 10/28/2012") +
+#     ggtitle("Hurricane Sandy 3-Day Forecast Path as of 10/28/2012") +
     theme(legend.position="none")
 
 ec <- get_map("arlington, va",7)
@@ -103,7 +103,7 @@ ggmap(ec) +
     geom_polygon(aes(x=long, y=lat, group=id), 
                  data=storm.path.to.display,
                  color="red",fill="yellow", alpha=0.2,size=0.3) +
-    ggtitle("Hurricane Sandy 3-Day Forecast Path as of 10/28/2012") +
+#     ggtitle("Hurricane Sandy 3-Day Forecast Path as of 10/28/2012") +
     theme(legend.position="none")
 
 # determine the properties in the storm path region
