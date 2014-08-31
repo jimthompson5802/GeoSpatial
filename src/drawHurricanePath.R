@@ -22,9 +22,8 @@ us.counties <- readShapeSpatial("./data/tl_2014_us_county/tl_2014_us_county.shp"
 us.states <-readShapeSpatial("./data/tl_2014_us_state/tl_2014_us_state.shp",
                              proj4string = CRS("+proj=longlat +datum=WGS84"))
 
-# select only states of interest
-states.of.interest <- subset(us.states,STUSPS %in% c("VA"), select=GEOID)
-counties.of.interest <- subset(us.counties,
+# select only counties of interest
+counties.of.interest <- subset(us.counties, STATEFP == 51 &
                                NAME %in% c("Arlington", "Fairfax",
                                            "Alexandria",
                                            "Loudoun","Culpeper",
@@ -94,6 +93,11 @@ proj4string(sp.storm) <- CRS(proj4string(storm.path))
 # determine the properties in the storm path region
 flag <- over(property.locations,sp.storm)
 property.df$col <- factor(ifelse(!is.na(flag),"in","out"),levels=c("in","out"))
+property.count <- length(flag)
+property.value<- sum(floor(property.df$value))
+property.count.at.risk <- sum(!is.na(flag))
+property.value.at.risk <- sum(floor(property.df$value[is.na(flag)]))
+
 
 # plot property locations
 # print map with property locations

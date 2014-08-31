@@ -20,7 +20,7 @@ us.states <-readShapeSpatial("./data/tl_2014_us_state/tl_2014_us_state.shp",
 
 # select only states of interest
 states.of.interest <- subset(us.states,STUSPS %in% c("VA"), select=GEOID)
-counties.of.interest <- subset(us.counties,
+counties.of.interest <- subset(us.counties,STATEFP == 51 &
                                NAME %in% c("Arlington", "Fairfax",
                                            "Alexandria",
                                            "Loudoun","Culpeper",
