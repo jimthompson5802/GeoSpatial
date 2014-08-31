@@ -27,25 +27,13 @@ counties.of.interest <- subset(us.counties,
                                            "Rappahannock", "Fauquier",
                                            "Stafford","Prince William"))
 
-this.map <- get_map("arlington, virginia",8)
-county.boundaries <- cropToMap(this.map,counties.of.interest)
-
-
-ggmap(this.map) +
-    geom_polygon(aes(x=long, y=lat, group=id), 
-                 data=county.boundaries,
-                 color="red",alpha=0) +
-    geom_text(aes(x=as.numeric(as.character(INTPTLON)), 
-                  y=as.numeric(as.character(INTPTLAT)), label=NAME),
-              data=attr(counties.of.interest,"data"),
-              size=3)
 
 ###
 # generate simulate property locations in the counties of interest
 ###
 
 # generate long/lat coordinates and property value
-generatePropertyData <- function(sp) {
+generatePropertyData <- function(sp, num.pts=5) {
     # get Polygon definition for a county
     polygon <- attr(sp,"Polygons")[[1]]
     
@@ -53,10 +41,50 @@ generatePropertyData <- function(sp) {
     coords <- attr(polygon,"coords")
     colnames(coords) <- c("long","lat")
     
-    location.points <- SpatialPoints(coords,proj4string="+proj=longlat +datum=WGS84")
+    # compute bounding box for the region
+    bb <- c(min(coords[,"long"]),min(coords[,"lat"]),max(coords[,"long"]),max(coords[,"lat"]))
+    names(bb) <- c("ll.lon","ll.lat","ur.lon","ur.lat")
     
-    invisible(location.points)
+    # randomly "place" points in the region, this is not perfect some will be out of region
+    set.seed(13)
+    lon.pts <- runif(num.pts, bb["ll.lon"], bb["ur.lon"])
+    lat.pts <- runif(num.pts, bb["ll.lat"], bb["ur.lat"])
+    value <- runif(num.pts,50000,200000)
+    
+    invisible(cbind(lon=lon.pts,lat=lat.pts, value=value))
 }
 
-ll <- lapply(attr(counties.of.interest,"polygons"), generatePropertyData)
+ll <- lapply(attr(counties.of.interest,"polygons"), generatePropertyData,10)
+
+df <- data.frame(do.call(rbind,ll))
+
+property.locations <- SpatialPointsDataFrame(df[,1:2],data=data.frame(value=df[,3]),
+                                proj4string=CRS("+proj=longlat +datum=WGS84"))
+# makes points are in the counties of interest
+sp.polygons <- SpatialPolygons(Srl=attr(counties.of.interest,"polygons"))
+proj4string(sp.polygons) <- CRS(proj4string(counties.of.interest))
+flag <- over(property.locations,sp.polygons)
+df$col <- factor(ifelse(!is.na(flag),"in","out"),levels=c("in","out"))
+df <- df[df$col=="in",]
+
+this.map <- get_map("arlington, virginia",9)
+county.boundaries <- cropToMap(this.map,counties.of.interest)
+
+ggmap(this.map) +
+    geom_point(aes(x=lon, y=lat, color=col), 
+               data=df, 
+               shape=16, size=4) +
+    scale_color_manual(values=c("red","blue"))+
+    geom_polygon(aes(x=long, y=lat, group=id), 
+                 data=county.boundaries,
+                 color="red",alpha=0) +
+    geom_text(aes(x=as.numeric(as.character(INTPTLON)), 
+                  y=as.numeric(as.character(INTPTLAT)), label=NAME),
+              data=attr(counties.of.interest,"data"),
+              size=3) +
+    theme_nothing()
+
+# Save property locations for analysis
+save(property.locations,file="./data/property_locations.RData")
+
 
