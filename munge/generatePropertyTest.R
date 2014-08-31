@@ -7,7 +7,7 @@ library(ggplot2)
 library(maptools)
 library(sp)
 
-
+source("./src/CommonFunctions.R")
 
 
 # read census.gov county shapefile data
