@@ -49,7 +49,9 @@ storm.map <- ggmap(base.map) +
               fontface="bold", color="red", size=3) +
     theme_nothing()
 
+png("./figures/base_property_locations.png")
 print(storm.map)
+dev.off()
 
 
 # retieve storm path shapefile
@@ -64,22 +66,26 @@ storm.path <- subset(storm.cone,FCSTPRD==72)
 ec <- get_map("arlington, va",6)
 storm.path.to.display <- cropToMap(ec,storm.path)
 
+png("./figures/high-level_storm_path.png")
 ggmap(ec) +
     geom_polygon(aes(x=long, y=lat, group=id), 
                  data=storm.path.to.display,
                  color="red",fill="yellow", alpha=0.2,size=0.3) +
 #     ggtitle("Hurricane Sandy 3-Day Forecast Path as of 10/28/2012") +
     theme(legend.position="none")
+dev.off()
 
 ec <- get_map("arlington, va",7)
 storm.path.to.display <- cropToMap(ec,storm.path)
 
+png("./figures/mid-level_storm_path.png")
 ggmap(ec) +
     geom_polygon(aes(x=long, y=lat, group=id), 
                  data=storm.path.to.display,
                  color="red",fill="yellow", alpha=0.2,size=0.3) +
 #     ggtitle("Hurricane Sandy 3-Day Forecast Path as of 10/28/2012") +
     theme(legend.position="none")
+dev.off()
 
 # determine the properties in the storm path region
 # convert property location to Spatial data for testing in or out of region
@@ -124,4 +130,7 @@ storm.map <- storm.map +
                  color="red",fill="yellow", alpha=0.2,size=0.3) +
 #     ggtitle("Hurricane Sandy Affected Areas") +
     theme(legend.position="none")
+
+png("./figures/affected_properties.png")
 print(storm.map)
+dev.off()
