@@ -44,11 +44,12 @@ cat("property is located at lon=",location[1,1],", lat=",location[1,2],"\n")
 @
 
 Following code fragment draws and annotates a Google map centered on the specified location.
-<<,message=FALSE,warning=FALSE>>=
+<<,eval=FALSE>>=
 # create Google map centered on address
 this.map <- get_map(address.of.interest,16)
 
 # draw map and annotate
+png("./figures/sample_map.png")
 ggmap(this.map) +
     # plot plot
     geom_point(aes(x=lon, y=lat), data=location, shape=4, size=5, color="red") +
@@ -58,7 +59,15 @@ ggmap(this.map) +
               size=4,
               hjust=0.5, vjust=1.5,
               color="red", fontface="bold")
+dev.off()
 @
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\maxwidth]{../figures/sample_map.png}
+    \caption{Sample Google Map}
+    \label{fig:sample_map}
+\end{figure}
+
 
 \section*{Simulated Use Case}
 This 
