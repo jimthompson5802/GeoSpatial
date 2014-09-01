@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage[section]{placeins}
 \usepackage{listings}
+\usepackage{hyperref}
 
 \begin{document}
 
@@ -20,8 +21,7 @@
 
 \section*{Creating Google Map in R}
 This paper demonstrates use of R packages \textbf{ggmap}\footnote{Kahle, D. and Wickham, H., \textbf{ggmap: Spatial Visualization with ggplot2}, \textit{The R Journal}, Vol. 5/1, http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf} and related packages for 
-visualizing and analyzing spatial data.  \textbf{ggmap} provides functions to visualize spatial data on top of maps built on
-top of Google Maps, OpenStreetMaps, Stamen Maps, or CloudMade Maps.  
+visualizing and analyzing spatial data.  \textbf{ggmap} provides functions to visualize spatial data on top of maps built using Google Maps, OpenStreetMaps, Stamen Maps, or CloudMade Maps.  
 
 Following code demonstrates geocoding an address using the \textbf{ggmap} function 
 \textbf{geocode()}.
@@ -66,11 +66,14 @@ dev.off()
     \label{fig:sample_map}
 \end{figure}
 
-\textbf{Note:} For the free web API Google imposes a limit of 2,500\footnote{https://developers.google.com/maps/documentation/geocoding/\#Limits} addresses that can be geocoded in a 24-hour period. 
+\textbf{Note:} For the free web API Google imposes a limit of 2,500\footnote{\url{https://developers.google.com/maps/documentation/geocoding/\#Limits}} addresses that can be geocoded in a 24-hour period. 
 
 
 \section*{Use Case}
 This use case illustrates how features of \textbf{ggmap} and other R packages related to spatial data can be used in conjunction with hurricane forecast data from the National Hurricane Center to identify individual properties that may be affected by a hurricane.  For this example, the October 28, 2012 forecast data for Hurricane Sandy is used.
+
+All source code for this use case can be found in the appendices at the end and \\
+on GitHub at \url{https://github.com/jimthompson5802/GeoSpatial}.
 
 \subsection*{Simulated Property Data}
 % Set 'cache=FALSE' for testing code in following code chunk
@@ -108,9 +111,9 @@ Steps taken for the storm are analysis.
 \begin{itemize}
     \item Simulated property data loaded in \textbf{SpatialPointsDataFrame} 
     structure.
-    \item State and County boundaries from Census Bureau (http://www.census.gov/geo/maps-data/data/tiger-line.html) loaded into \textbf{SpatialPolygonsDataFrame} structures.
-    \item Storm path data, which are provided as shapefile, from the National Hurricane Center \\ 
-    (http://www.nhc.noaa.gov/gis/) loaded in \textbf{SpatialPolygonsDataFrame} structure.  Yellow area in Figure~\ref{fig:high-level-path} shows the 72-hour forecast for the possible areas that will be impacted by Hurricane Sandy.  Figure~\ref{fig:mid-level-path} shows possible impacted areas within the mid-Atlantic region.
+    \item State and County boundaries from the \href{http://www.census.gov/geo/maps-data/data/tiger-line.html}{Census Bureau} loaded into \textbf{SpatialPolygonsDataFrame} structures.
+    \item Storm path data, which are provided as shapefile, from the 
+    \href{http://www.nhc.noaa.gov/gis/}{National Hurricane Center} loaded in \textbf{SpatialPolygonsDataFrame} structure.  Yellow area in Figure~\ref{fig:high-level-path} shows the 72-hour forecast for the possible areas that will be impacted by Hurricane Sandy.  Figure~\ref{fig:mid-level-path} shows possible impacted areas within the mid-Atlantic region.
 
     \begin{figure}[htbp]
         \centering
