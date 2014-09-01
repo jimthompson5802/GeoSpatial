@@ -3,6 +3,7 @@
 % specify required packages
 \usepackage{fullpage}
 \usepackage{graphicx}
+\usepackage[section]{placeins}
 
 \begin{document}
 
@@ -73,7 +74,7 @@ dev.off()
 This use case determines properties within a forecast path of a hurricane. 
 
 \subsection*{Simulated Property Data}
-% \begin{minipage}{\textwidth}
+
 For this test case, property data were simulated by random placement in ten
 Virginia adminstrative areas.  Figure~\ref{fig:simulated_property} depicts the 
 simulated property data.  County boundaries are obtained from Census Bureau (http://www.census.gov/geo/maps-data/data/tiger-line.html) 
@@ -83,7 +84,7 @@ simulated property data.  County boundaries are obtained from Census Bureau (htt
     \caption{Simulated Property Locations}
     \label{fig:simulated_property}
 \end{figure}
-% \end{minipage}
+
 
 
 \subsection*{Storm Path Analysis}
@@ -92,7 +93,7 @@ Storm path data were downloaded from the National Hurricane Center(http://www.nh
 Figure~\ref{fig:high-level-path} shows the 72-hour forecast for the possible path 
 of Hurrican Sandy as of 10/28/2012.
 
-\begin{figure}[!htbp]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\maxwidth]{../figures/high-level_storm_path.png}
     \caption{Hurricane Sandy Forecast Path (East Coast), October 28, 2012}
@@ -103,7 +104,7 @@ of Hurrican Sandy as of 10/28/2012.
 Figure~\ref{fig:mid-level-path} shows the path of the hurricane within the 
 mid-Atlantic region.
 
-\begin{figure}[!htbp]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\maxwidth]{../figures/mid-level_storm_path.png}
     \caption{Hurricane Sandy Forecast Path (Mid-Atlantic), October 28, 2012}
@@ -114,7 +115,7 @@ mid-Atlantic region.
 Finally, Figure~\ref{fig:impacted-properties} shows areas in the Washington, D.C.
 area potentially in the path of Sandy.  Properites in the hurricane path are show in red.
 
-\begin{figure}[!htbp]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=\maxwidth]{../figures/affected_properties.png}
     \caption{Properties Potentially Impacted by Hurricane Sandy}
