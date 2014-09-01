@@ -78,11 +78,10 @@ data for Hurricane Sandy is used.
 source("../munge/generatePropertyTest.R",echo=TRUE)
 @
 
-For this test case, \Sexpr{property.count} simulated properties were randomly placed in
+\Sexpr{property.count} simulated properties were randomly placed in
 \Sexpr{length(attr(counties.of.interest,"polygons"))} Virginia administrative areas.  Property
-values for the properties are uniform psuedo-random values between \$50,000 and \$200,000.  The
-total value of the simulate properties is \$\Sexpr{format(property.value,big.mark=",")}. 
-Figure~\ref{fig:simulated_property} depicts the simulated property data. 
+values for the simulated properties are uniform psuedo-random values between \$50,000 and \$200,000.  The total value of the simulate properties is \$\Sexpr{format(property.value,big.mark=",")}. 
+Figure~\ref{fig:simulated_property} show locations of the simulated properties. 
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth]{../figures/base_property_locations.png}
@@ -130,7 +129,7 @@ Steps taken for the storm are analysis.
     properties lie within the storm path polygon structures.  
     Figure~\ref{fig:impacted-properties} shows areas in the Washington, D.C.
 area potentially in the path of Sandy.  Properties in the hurricane path are show in red.  
-Out of the \Sexpr{property.count} properties in the study, we find that \Sexpr{property.count.at.risk} properties are in the projected storm path and at risk.  These properties account for 
+Out of the \Sexpr{property.count} properties in the study, we find that \Sexpr{property.count.at.risk} properties are in the projected storm path.  These properties account for 
 \$\Sexpr{format(property.value.at.risk,big.mark=",")} out of the total \$\Sexpr{format(property.value,big.mark=",")}. 
     \begin{figure}[htbp]
         \centering
