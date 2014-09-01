@@ -19,12 +19,20 @@
    \vspace*{\stretch{2.0}}
 \end{titlepage}
 
-\section*{Creating Google Map in R}
-This paper demonstrates use of R packages \textbf{ggmap}\footnote{Kahle, D. and Wickham, H., \textbf{ggmap: Spatial Visualization with ggplot2}, \textit{The R Journal}, Vol. 5/1, \url{http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf}} and related packages for 
-visualizing and analyzing spatial data.  \textbf{ggmap} provides functions to visualize spatial data on top of maps built using Google Maps, OpenStreetMaps, Stamen Maps, or CloudMade Maps.  
 
-Following code demonstrates geocoding an address using the \textbf{ggmap} function 
-\textbf{geocode()}.
+This paper demonstrates use of R packages \textbf{ggmap}\footnote{Kahle, D. and Wickham, H., \textbf{ggmap: Spatial Visualization with ggplot2}, \textit{The R Journal}, Vol. 5/1, \url{http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf}} and related spatial packages for 
+visualizing and analyzing spatial data.  \textbf{ggmap} provides functions to visualize spatial data on top of maps built using Google Maps, OpenStreetMaps, Stamen Maps, or CloudMade Maps.  
+In addition, this paper illustrates how these R packages can be used in conjunction with
+Census Bureau geographic data and National Hurricane forecast data to determine properties
+that may be impacted by a hurricane.
+
+
+\section*{Creating Google Map in R}
+In this section, we show how to geocode an address to determine its location, i.e.,
+longitude and latitude.  We then generate a Google map and annotate the map with
+the location information of the geocoded address.
+
+Following code geocodes an address using the \textbf{ggmap}'s function \textbf{geocode()}.
 
 <<,message=FALSE,warning=FALSE>>=
 ###
@@ -38,7 +46,7 @@ address.of.interest <- "8250 Jones Branch Dr., McLean, VA"
 location <- geocode(address.of.interest,output="more")
 
 # show resulting geocoded address
-cat("property is located at lon=",location[1,1],", lat=",location[1,2],"\n")
+cat("property is located at longitude=",location[1,1],", latitude=",location[1,2],"\n")
 @
 
 Following code fragment draws and annotates a Google map centered on the specified location.
@@ -69,7 +77,7 @@ dev.off()
 \textbf{Note:} For the free web API Google imposes a limit of 2,500\footnote{\url{https://developers.google.com/maps/documentation/geocoding/\#Limits}} addresses that can be geocoded in a 24-hour period. 
 
 
-\section*{Use Case}
+\section*{Hurricane Impact Analysis Use Case}
 This use case illustrates how features of \textbf{ggmap} and other R packages related to spatial data can be used in conjunction with hurricane forecast data from the National Hurricane Center to identify individual properties that may be affected by a hurricane.  For this example, the October 28, 2012 forecast data for Hurricane Sandy is used.
 
 All source code for this use case can be found in the appendices at the end and on GitHub \\
