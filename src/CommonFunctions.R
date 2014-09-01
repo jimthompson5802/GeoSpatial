@@ -12,8 +12,11 @@ cropToMap <- function(the.map,spatial.data) {
     bb <- bb + c(epsilon, epsilon, -epsilon, -epsilon)
     
     # create cropping bounding box for the requested map
-    CP <- as(extent(bb$ll.lon, bb$ur.lon, bb$ll.lat, bb$ur.lat), "SpatialPolygons")
-    proj4string(CP) <- CRS("+proj=longlat +datum=WGS84")  # project string for Google Maps
+    CP <- as(extent(bb$ll.lon, bb$ur.lon, bb$ll.lat, bb$ur.lat), 
+             "SpatialPolygons")
+    
+    # project string for Google Maps
+    proj4string(CP) <- CRS("+proj=longlat +datum=WGS84")  
     
     # apply cropping to spatial data
     crop.spatial.data <- gIntersection(spatial.data, CP, byid=TRUE)
