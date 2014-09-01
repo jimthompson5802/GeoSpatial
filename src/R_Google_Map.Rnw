@@ -98,7 +98,7 @@ Figure~\ref{fig:simulated_property} show locations of the simulated properties.
 <<,cache=FALSE,warning=FALSE,message=FALSE,echo=FALSE,results="hide">>=
 source("drawHurricanePath.R",echo=TRUE)
 @
-In addition to \textbf{ggmap}, these R packages used for the use case:
+In addition to \textbf{ggmap}, these R packages are used:
 \begin{itemize}
     \item \textbf{maptools} - Set of tools for manipulating and reading geographic data, in particular ESRI shapefiles.
     \item \textbf{rgeos} - Interface to Geometry Engine - Open Source (GEOS) using the C API for topology operations on geometries. 
