@@ -45,7 +45,7 @@ storm.map <- ggmap(base.map) +
                shape=16, size=3) +
     geom_polygon(aes(x=long, y=lat, group=id), 
                  data=county.boundaries,
-                 color="red",alpha=0) +
+                 color="black",alpha=0) +
     geom_text(aes(x=as.numeric(as.character(INTPTLON)), 
                   y=as.numeric(as.character(INTPTLAT)), label=NAME),
               data=attr(counties.of.interest,"data"),
@@ -126,7 +126,7 @@ storm.map <- ggmap(base.map) +
     scale_color_manual(values=c("red","black"))+
     geom_polygon(aes(x=long, y=lat, group=id), 
                  data=county.boundaries,
-                 color="red",alpha=0) +
+                 color="black",alpha=0) +
     geom_text(aes(x=as.numeric(as.character(INTPTLON)), 
                   y=as.numeric(as.character(INTPTLAT)), label=NAME),
               data=attr(counties.of.interest,"data"),
