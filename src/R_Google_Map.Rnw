@@ -23,7 +23,7 @@ This paper demonstrates use of R packages \textbf{ggmap}\footnote{Kahle, D. and 
 visualizing and analyzing spatial data.  \textbf{ggmap} provides functions to visualize spatial data on top of maps built on
 top of Google Maps, OpenStreetMaps, Stamen Maps, or CloudMade Maps.  
 
-Following code demonstrates geocoding an addresse using the \textbf{ggmap} function 
+Following code demonstrates geocoding an address using the \textbf{ggmap} function 
 \textbf{geocode()}.
 
 <<,message=FALSE,warning=FALSE>>=
@@ -66,11 +66,11 @@ dev.off()
     \label{fig:sample_map}
 \end{figure}
 
+\textbf{Note:} For the free web API Google imposes a limit of 2,500\footnote{https://developers.google.com/maps/documentation/geocoding/\#Limits} addresses that can be geocoded in a 24-hour period. 
+
 
 \section*{Use Case}
-
-Using hurricane forecast geospatial data from the National Hurrican Center, this use case determines properties within forecasted path of the storm.  For this example, the October 28, 2012 forecast 
-data for Hurricane Sandy is used.
+This use case illustrates how features of \textbf{ggmap} and other R packages related to spatial data can be used in conjunction with hurricane forecast data from the National Hurricane Center to identify individual properties that may be affected by a hurricane.  For this example, the October 28, 2012 forecast data for Hurricane Sandy is used.
 
 \subsection*{Simulated Property Data}
 % Set 'cache=FALSE' for testing code in following code chunk
@@ -80,7 +80,7 @@ source("../munge/generatePropertyTest.R",echo=TRUE)
 
 \Sexpr{property.count} simulated properties were randomly placed in
 \Sexpr{length(attr(counties.of.interest,"polygons"))} Virginia administrative areas.  Property
-values for the simulated properties are uniform psuedo-random values between \$50,000 and \$200,000.  The total value of the simulate properties is \$\Sexpr{format(property.value,big.mark=",")}. 
+values for the simulated properties are uniform pseudo-random values between \$50,000 and \$200,000.  The total value of the simulate properties is \$\Sexpr{format(property.value,big.mark=",")}. 
 Figure~\ref{fig:simulated_property} show locations of the simulated properties. 
 \begin{figure}[!htbp]
     \centering
@@ -95,12 +95,13 @@ Figure~\ref{fig:simulated_property} show locations of the simulated properties.
 <<,cache=FALSE,warning=FALSE,message=FALSE,echo=FALSE,results="hide">>=
 source("drawHurricanePath.R",echo=TRUE)
 @
-R packages used for this analysis
+In addition to \textbf{ggmap}, these R packages used for the use case:
 \begin{itemize}
-    \item \textbf{ggmap}
-    \item \textbf{maptools}
-    \item \textbf{rgeos}
-    \item \textbf{raster}
+    \item \textbf{maptools} - Set of tools for manipulating and reading geographic data, in particular ESRI shapefiles.
+    \item \textbf{rgeos} - Interface to Geometry Engine - Open Source (GEOS) using the C API for topology operations on geometries. 
+    \item \textbf{raster} - Functions for reading, writing, manipulating, analyzing and modeling of gridded spatial data.
+    \item \textbf{sp} - A package that provides classes and methods for spatial data.
+    \item \textbf{ggplot2} - An implementation of the grammar of graphics in R.
 \end{itemize}
 
 Steps taken for the storm are analysis.
@@ -125,10 +126,11 @@ Steps taken for the storm are analysis.
     \end{figure}
     
     
-    \item Function \textbf{over()} from the package \textbf{sp} determines which
-    properties lie within the storm path polygon structures.  
+    \item Function \textbf{over()} from the package \textbf{sp} provides a means to 
+    determine whether or not an individual property is contained within the 
+    storm path polygon structures.  
     Figure~\ref{fig:impacted-properties} shows areas in the Washington, D.C.
-area potentially in the path of Sandy.  Properties in the hurricane path are show in red.  
+area potentially in the path of Hurricane Sandy.  Properties in the hurricane path are show in red.  
 Out of the \Sexpr{property.count} properties in the study, we find that \Sexpr{property.count.at.risk} properties are in the projected storm path.  These properties account for 
 \$\Sexpr{format(property.value.at.risk,big.mark=",")} out of the total \$\Sexpr{format(property.value,big.mark=",")}. 
     \begin{figure}[htbp]
