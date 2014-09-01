@@ -47,7 +47,8 @@ generatePropertyData <- function(sp, num.pts=5) {
             max(coords[,"long"]),max(coords[,"lat"]))
     names(bb) <- c("ll.lon","ll.lat","ur.lon","ur.lat")
     
-    # randomly "place" points in the region, this is not perfect some will be out of region
+    # randomly "place" points in the region, 
+    # this is not perfect some will be out of region
     set.seed(13)
     lon.pts <- runif(num.pts, bb["ll.lon"], bb["ur.lon"])
     lat.pts <- runif(num.pts, bb["ll.lat"], bb["ur.lat"])
@@ -60,8 +61,9 @@ ll <- lapply(attr(counties.of.interest,"polygons"), generatePropertyData,10)
 
 df <- data.frame(do.call(rbind,ll))
 
-property.locations <- SpatialPointsDataFrame(df[,1:2],data=data.frame(value=df[,3]),
-                                             proj4string=CRS("+proj=longlat +datum=WGS84"))
+property.locations <- SpatialPointsDataFrame(df[,1:2],
+                                data=data.frame(value=df[,3]),
+                                proj4string=CRS("+proj=longlat +datum=WGS84"))
 # makes points are in the counties of interest
 sp.polygons <- SpatialPolygons(Srl=attr(counties.of.interest,"polygons"))
 proj4string(sp.polygons) <- CRS(proj4string(counties.of.interest))

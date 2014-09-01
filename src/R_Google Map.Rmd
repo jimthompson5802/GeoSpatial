@@ -1,0 +1,42 @@
+---
+title: "R & Google Maps"
+author: Jim Thompson
+output: pdf_document
+---
+
+
+
+```{r ,message=FALSE,warning=FALSE}
+###
+# Geocode and map address
+###
+library(ggmap)
+
+address.of.interest <- "8250 Jones Branch Dr., McLean, VA"
+
+# call Google web service API to geocode the address
+location <- geocode(address.of.interest,output="more")
+
+# show resulting geocoded address
+cat("property is located at lon=",location[1,1],", lat=",location[1,2],"\n")
+```
+
+Following code fragment draws and annotates a Google map centered on the location.
+
+```{r ,message=FALSE,warning=FALSE}
+# create map centered on address
+this.map <- get_map(address.of.interest,16)
+
+# draw map and annotate
+ggmap(this.map) +
+    # plot plot
+    geom_point(aes(x=lon, y=lat), data=location, shape=4, size=5, color="red") +
+    
+    # label point
+    geom_text(aes(x=lon, y=lat), data= location, label=address.of.interest, 
+              size=4,
+              hjust=0.5, vjust=1.5,
+              color="red", fontface="bold")
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
