@@ -106,6 +106,9 @@ Figure~\ref{fig:simulated_property} show locations of the simulated properties.
 <<,cache=FALSE,warning=FALSE,message=FALSE,echo=FALSE,results="hide">>=
 source("drawHurricanePath.R",echo=TRUE)
 @
+The \href{http://www.nhc.noaa.gov/gis/}{National Hurricane Center} provides storm 
+forecast data in ERSI shapefile format.  Shapefiles are a geospatial vector data format for geographic information systems software. Shapefiles spatially describe points, lines and polygons.  
+
 In addition to \textbf{ggmap}, these R packages are used:
 \begin{itemize}
     \item \textbf{maptools} - Set of tools for manipulating and reading geographic data, in particular ESRI shapefiles.
@@ -163,10 +166,6 @@ Out of the \Sexpr{property.count} properties in the study, we find that \Sexpr{p
 
 \section*{Appendix - CommonFunctions.R}
 \lstinputlisting[language=R]{CommonFunctions.R}
-
-
-
-
 
 
 
