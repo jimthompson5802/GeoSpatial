@@ -20,7 +20,7 @@
 \end{titlepage}
 
 \section*{Creating Google Map in R}
-This paper demonstrates use of R packages \textbf{ggmap}\footnote{Kahle, D. and Wickham, H., \textbf{ggmap: Spatial Visualization with ggplot2}, \textit{The R Journal}, Vol. 5/1, http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf} and related packages for 
+This paper demonstrates use of R packages \textbf{ggmap}\footnote{Kahle, D. and Wickham, H., \textbf{ggmap: Spatial Visualization with ggplot2}, \textit{The R Journal}, Vol. 5/1, \url{http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf}} and related packages for 
 visualizing and analyzing spatial data.  \textbf{ggmap} provides functions to visualize spatial data on top of maps built using Google Maps, OpenStreetMaps, Stamen Maps, or CloudMade Maps.  
 
 Following code demonstrates geocoding an address using the \textbf{ggmap} function 
