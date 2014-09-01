@@ -66,13 +66,19 @@ storm.path <- subset(storm.cone,FCSTPRD==72)
 ec <- get_map("arlington, va",6)
 storm.path.to.display <- cropToMap(ec,storm.path)
 
+labpt <- attr(attr(storm.path,"polygons")[[1]],"labpt")
+
 png("./figures/high-level_storm_path.png")
 ggmap(ec) +
     geom_polygon(aes(x=long, y=lat, group=id), 
                  data=storm.path.to.display,
                  color="red",fill="yellow", alpha=0.2,size=0.3) +
+    geom_text(aes(x=labpt[1], y=labpt[2]), 
+              label="Hurricane Sandy\n72-hour Forecast Path", 
+              size=10,
+              color="red") +
 #     ggtitle("Hurricane Sandy 3-Day Forecast Path as of 10/28/2012") +
-    theme(legend.position="none")
+    theme_nothing()
 dev.off()
 
 ec <- get_map("arlington, va",7)
@@ -84,7 +90,7 @@ ggmap(ec) +
                  data=storm.path.to.display,
                  color="red",fill="yellow", alpha=0.2,size=0.3) +
 #     ggtitle("Hurricane Sandy 3-Day Forecast Path as of 10/28/2012") +
-    theme(legend.position="none")
+    theme_nothing()
 dev.off()
 
 # determine the properties in the storm path region
@@ -129,7 +135,7 @@ storm.map <- storm.map +
                  data=storm.path.to.display,
                  color="red",fill="yellow", alpha=0.2,size=0.3) +
 #     ggtitle("Hurricane Sandy Affected Areas") +
-    theme(legend.position="none")
+    theme_nothing()
 
 png("./figures/affected_properties.png")
 print(storm.map)
