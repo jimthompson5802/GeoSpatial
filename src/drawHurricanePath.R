@@ -117,7 +117,7 @@ storm.map <- ggmap(base.map) +
     geom_point(aes(x=lon, y=lat, color=col), 
                data=property.df, 
                shape=16, size=3) +
-    scale_color_manual(values=c("red","blue"))+
+    scale_color_manual(values=c("red","black"))+
     geom_polygon(aes(x=long, y=lat, group=id), 
                  data=county.boundaries,
                  color="red",alpha=0) +

@@ -73,44 +73,206 @@ dev.off()
 This use case determines properties within a forecast path of a hurricane. 
 
 \subsection*{Simulated Property Data}
+% \begin{minipage}{\textwidth}
 For this test case, property data were simulated by random placement in ten
 Virginia adminstrative areas.  Figure~\ref{fig:simulated_property} depicts the 
-simulated property data.
-\begin{figure}
+simulated property data.  County boundaries are obtained from Census Bureau (http://www.census.gov/geo/maps-data/data/tiger-line.html) 
+\begin{figure}[!htbp]
     \centering
-    \includegraphics[width=\maxwidth]{../figures/base_property_locations.png}
+    \includegraphics[width=\textwidth]{../figures/base_property_locations.png}
     \caption{Simulated Property Locations}
     \label{fig:simulated_property}
 \end{figure}
+% \end{minipage}
+
 
 \subsection*{Storm Path Analysis}
 Storm path data were downloaded from the National Hurricane Center(http://www.nhc.noaa.gov/gis/).  Storm path data are provided as shapefile data.
 
-\begin{figure}
+Figure~\ref{fig:high-level-path} shows the 72-hour forecast for the possible path 
+of Hurrican Sandy as of 10/28/2012.
+
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=\maxwidth]{../figures/high-level_storm_path.png}
-    \caption{Hurricane Sandy 72-hour Forecast Path, October 28, 2014}
+    \caption{Hurricane Sandy Forecast Path (East Coast), October 28, 2012}
     \label{fig:high-level-path}
 \end{figure}
 
-\begin{figure}
+
+Figure~\ref{fig:mid-level-path} shows the path of the hurricane within the 
+mid-Atlantic region.
+
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=\maxwidth]{../figures/mid-level_storm_path.png}
-    \caption{Hurricane Sandy 72-hour Forecast Path, October 28, 2014}
+    \caption{Hurricane Sandy Forecast Path (Mid-Atlantic), October 28, 2012}
     \label{fig:mid-level-path}
 \end{figure}
 
-\begin{figure}
+
+Finally, Figure~\ref{fig:impacted-properties} shows areas in the Washington, D.C.
+area potentially in the path of Sandy.  Properites in the hurricane path are show in red.
+
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=\maxwidth]{../figures/affected_properties.png}
-    \caption{Properties Impacted by Hurricane Sandy}
+    \caption{Properties Potentially Impacted by Hurricane Sandy}
     \label{fig:impacted-properties}
 \end{figure}
 
-\newpage
+
+\section*{Appendix - Hurricane Path Analysis}
+<< ,eval=FALSE,tidy=FALSE>>=
+###
+# example code to draw Hurrican Storm Path
+###
+
+library(ggmap)
+library(ggplot2)
+library(maptools)
+library(rgeos)
+library(raster)
+
+
+source("./src/CommonFunctions.R")
+
+# retrieve simulated property location data
+load("./data/property_locations.RData")
+
+# read census.gov county shapefile data
+us.counties <- readShapeSpatial("./data/tl_2014_us_county/tl_2014_us_county.shp",
+                                proj4string = CRS("+proj=longlat +datum=WGS84"))
+
+# read census.gov state shapefile data
+us.states <-readShapeSpatial("./data/tl_2014_us_state/tl_2014_us_state.shp",
+                             proj4string = CRS("+proj=longlat +datum=WGS84"))
+
+# select only counties of interest
+counties.of.interest <- subset(us.counties, STATEFP == 51 &
+                               NAME %in% c("Arlington", "Fairfax",
+                                           "Alexandria",
+                                           "Loudoun","Culpeper",
+                                           "Rappahannock", "Fauquier",
+                                           "Stafford","Prince William"))
+
+
+# generate mape at requested location and zoom level
+base.map <- get_map("prince william, va",9)
+county.boundaries <- cropToMap(base.map,counties.of.interest)
+
+# print map with property locations
+storm.map <- ggmap(base.map) +
+    geom_point(aes(x=lon, y=lat), 
+               data=property.df, 
+               shape=16, size=3) +
+    geom_polygon(aes(x=long, y=lat, group=id), 
+                 data=county.boundaries,
+                 color="red",alpha=0) +
+    geom_text(aes(x=as.numeric(as.character(INTPTLON)), 
+                  y=as.numeric(as.character(INTPTLAT)), label=NAME),
+              data=attr(counties.of.interest,"data"),
+              fontface="bold", color="red", size=3) +
+    theme_nothing()
+
+png("./figures/base_property_locations.png")
+print(storm.map)
+dev.off()
+
+
+# retieve storm path shapefile
+storm.cone <- readShapeSpatial("./nhcdata/al182012_5day_025/al182012.025_5day_pgn.shp",
+                               proj4string = CRS("+proj=longlat +datum=WGS84"))
+
+
+# get only the 72-hour forecast
+storm.path <- subset(storm.cone,FCSTPRD==72)
+
+# display high-level map
+ec <- get_map("arlington, va",6)
+storm.path.to.display <- cropToMap(ec,storm.path)
+
+labpt <- attr(attr(storm.path,"polygons")[[1]],"labpt")
+
+png("./figures/high-level_storm_path.png")
+ggmap(ec) +
+    geom_polygon(aes(x=long, y=lat, group=id), 
+                 data=storm.path.to.display,
+                 color="red",fill="yellow", alpha=0.2,size=0.3) +
+    geom_text(aes(x=labpt[1], y=labpt[2]), 
+              label="Hurricane Sandy\n72-hour Forecast Path", 
+              size=10,
+              color="red") +
+#     ggtitle("Hurricane Sandy 3-Day Forecast Path as of 10/28/2012") +
+    theme_nothing()
+dev.off()
+
+ec <- get_map("arlington, va",7)
+storm.path.to.display <- cropToMap(ec,storm.path)
+
+png("./figures/mid-level_storm_path.png")
+ggmap(ec) +
+    geom_polygon(aes(x=long, y=lat, group=id), 
+                 data=storm.path.to.display,
+                 color="red",fill="yellow", alpha=0.2,size=0.3) +
+#     ggtitle("Hurricane Sandy 3-Day Forecast Path as of 10/28/2012") +
+    theme_nothing()
+dev.off()
+
+# determine the properties in the storm path region
+# convert property location to Spatial data for testing in or out of region
+property.locations <- SpatialPoints(property.df[,1:2],
+                                    proj4string=CRS("+proj=longlat +datum=WGS84"))
+
+# extract out storm path polygon data for testing
+sp.storm <- SpatialPolygons(Srl=attr(storm.path,"polygons"))
+proj4string(sp.storm) <- CRS(proj4string(storm.path))
+
+# determine the properties in the storm path region
+flag <- over(property.locations,sp.storm)
+property.df$col <- factor(ifelse(!is.na(flag),"in","out"),levels=c("in","out"))
+property.count <- length(flag)
+property.value<- sum(floor(property.df$value))
+property.count.at.risk <- sum(!is.na(flag))
+property.value.at.risk <- sum(floor(property.df$value[is.na(flag)]))
+
+
+# plot property locations
+# print map with property locations
+storm.map <- ggmap(base.map) +
+    geom_point(aes(x=lon, y=lat, color=col), 
+               data=property.df, 
+               shape=16, size=3) +
+    scale_color_manual(values=c("red","black"))+
+    geom_polygon(aes(x=long, y=lat, group=id), 
+                 data=county.boundaries,
+                 color="red",alpha=0) +
+    geom_text(aes(x=as.numeric(as.character(INTPTLON)), 
+                  y=as.numeric(as.character(INTPTLAT)), label=NAME),
+              data=attr(counties.of.interest,"data"),
+              fontface="bold", color="red", size=3) +
+    theme_nothing()
+
+
+storm.path.to.display <- cropToMap(base.map,storm.path)
+# generate map with storm path
+storm.map <- storm.map +
+    geom_polygon(aes(x=long, y=lat, group=id), 
+                 data=storm.path.to.display,
+                 color="red",fill="yellow", alpha=0.2,size=0.3) +
+    theme_nothing()
+
+png("./figures/affected_properties.png")
+print(storm.map)
+dev.off()
+
+@
+
+
+
 
 \section*{Appendix - Generate Sample Property Data}
-<<,eval=FALSE,tidy=TRUE>>=
+<<,eval=FALSE,tidy=FALSE>>=
 ###
 # Generate simulated property data
 ###
@@ -155,7 +317,8 @@ generatePropertyData <- function(sp, num.pts=5) {
     colnames(coords) <- c("long","lat")
     
     # compute bounding box for the region
-    bb <- c(min(coords[,"long"]),min(coords[,"lat"]),max(coords[,"long"]),max(coords[,"lat"]))
+    bb <- c(min(coords[,"long"]),min(coords[,"lat"]),
+            max(coords[,"long"]),max(coords[,"lat"]))
     names(bb) <- c("ll.lon","ll.lat","ur.lon","ur.lat")
     
     # randomly "place" points in the region, this is not perfect some will be out of region
@@ -201,6 +364,38 @@ ggmap(this.map) +
 property.df <- subset(df,select=-col)
 save(property.df,file="./data/property_locations.RData")
 
+
+@
+
+
+\section*{Appendix - CommonFunctions.R}
+<<,eval=TRUE,tidy=FALSE>>=
+# function to crop spatial data to bounding box of a Google Map
+cropToMap <- function(the.map,spatial.data) {
+    # the.map - Google map to crop the storm path to
+    # spatial.data - Spatial data to display on map
+    
+    
+    # calculate bounding box for displaying storm path
+    bb <- attr(the.map,"bb")
+    
+    # adjust bounding box to make it slightly smaller than map 
+    epsilon <- 1e-6   
+    bb <- bb + c(epsilon, epsilon, -epsilon, -epsilon)
+    
+    # create cropping bounding box for the requested map
+    CP <- as(extent(bb$ll.lon, bb$ur.lon, bb$ll.lat, bb$ur.lat), "SpatialPolygons")
+    proj4string(CP) <- CRS("+proj=longlat +datum=WGS84")  # project string for Google Maps
+    
+    # apply cropping to spatial data
+    crop.spatial.data <- gIntersection(spatial.data, CP, byid=TRUE)
+    crop.spatial.data <- fortify(crop.spatial.data)
+    
+    # return the cropped spatial data
+    invisible(crop.spatial.data)
+    
+    
+}
 
 @
 
