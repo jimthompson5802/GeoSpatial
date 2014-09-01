@@ -61,18 +61,21 @@ ggmap(this.map) +
               color="red", fontface="bold")
 dev.off()
 @
-\begin{figure}[h]
+\begin{figure}[t]
     \centering
     \includegraphics[width=0.75\maxwidth]{../figures/sample_map.png}
     \caption{Sample Google Map}
     \label{fig:sample_map}
 \end{figure}
-
+\newpage
 
 \section*{Simulated Use Case}
-This 
+This use case determines properties within a forecast path of a hurricane. 
 
 \subsection*{Simulated Property Data}
+For this test case, property data were simulated by random placement in ten
+Virginia adminstrative areas.  Figure~\ref{fig:simulated_property} depicts the 
+simulated property data.
 \begin{figure}
     \centering
     \includegraphics[width=\maxwidth]{../figures/base_property_locations.png}
@@ -81,14 +84,30 @@ This
 \end{figure}
 
 \subsection*{Storm Path Analysis}
-provides
+Storm path data were downloaded from the National Hurricane Center(http://www.nhc.noaa.gov/gis/).  Storm path data are provided as shapefile data.
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\maxwidth]{../figures/high-level_storm_path.png}
+    \caption{Hurricane Sandy 72-hour Forecast Path, October 28, 2014}
+    \label{fig:high-level-path}
+\end{figure}
 
-\includegraphics[width=\maxwidth]{../figures/high-level_storm_path.png}
+\begin{figure}
+    \centering
+    \includegraphics[width=\maxwidth]{../figures/mid-level_storm_path.png}
+    \caption{Hurricane Sandy 72-hour Forecast Path, October 28, 2014}
+    \label{fig:mid-level-path}
+\end{figure}
 
-\includegraphics[width=\maxwidth]{../figures/mid-level_storm_path.png}
+\begin{figure}
+    \centering
+    \includegraphics[width=\maxwidth]{../figures/affected_properties.png}
+    \caption{Properties Impacted by Hurricane Sandy}
+    \label{fig:impacted-properties}
+\end{figure}
 
-\includegraphics[width=\maxwidth]{../figures/affected_properties.png}
+\newpage
 
 \section*{Appendix - Generate Sample Property Data}
 <<,eval=FALSE,tidy=TRUE>>=
