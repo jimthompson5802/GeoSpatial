@@ -103,7 +103,7 @@ print(xtable(df, caption="Sample Simulated Property Data",
 
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=\textwidth]{../figures/base_property_locations.png}
+    \includegraphics[width=0.75\textwidth]{../figures/base_property_locations.png}
     \caption{Simulated Property Locations}
     \label{fig:simulated_property}
 \end{figure}
@@ -148,13 +148,13 @@ storm.cone<-readShapeSpatial("../nhcdata/al182012_5day_025/al182012.025_5day_pgn
 
     \begin{figure}[htbp]
         \centering
-        \includegraphics[width=\maxwidth]{../figures/high-level_storm_path.png}
+        \includegraphics[width=0.75\maxwidth]{../figures/high-level_storm_path.png}
         \caption{Hurricane Sandy Forecast Path (East Coast), October 28, 2012}
         \label{fig:high-level-path}
     \end{figure}
     \begin{figure}[htbp]
         \centering
-        \includegraphics[width=\maxwidth]{../figures/mid-level_storm_path.png}
+        \includegraphics[width=0.75\maxwidth]{../figures/mid-level_storm_path.png}
         \caption{Hurricane Sandy Forecast Path (Mid-Atlantic), October 28, 2012}
         \label{fig:mid-level-path}
     \end{figure}
@@ -178,7 +178,7 @@ Out of the \Sexpr{property.count} properties in the study, we find that \Sexpr{p
 \$\Sexpr{format(property.value.at.risk,big.mark=",")} out of the total \$\Sexpr{format(property.value,big.mark=",")}. 
     \begin{figure}[htbp]
         \centering
-        \includegraphics[width=\maxwidth]{../figures/affected_properties.png}
+        \includegraphics[width=0.75\maxwidth]{../figures/affected_properties.png}
         \caption{Properties Potentially Impacted by Hurricane Sandy}
         \label{fig:impacted-properties}
     \end{figure}
