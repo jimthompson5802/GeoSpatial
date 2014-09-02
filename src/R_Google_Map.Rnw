@@ -91,14 +91,23 @@ source("../munge/generatePropertyTest.R",echo=TRUE)
 
 \Sexpr{property.count} simulated properties were randomly placed in
 \Sexpr{length(attr(counties.of.interest,"polygons"))} Virginia administrative areas.  Property
-values for the simulated properties are uniform pseudo-random values between \$50,000 and \$200,000.  The total value of the simulate properties is \$\Sexpr{format(property.value,big.mark=",")}. 
-Figure~\ref{fig:simulated_property} show locations of the simulated properties. 
+values for the simulated properties are uniform pseudo-random values between \$50,000 and \$200,000.  The total value of the simulate properties is \$\Sexpr{format(property.value,big.mark=",")}. Figure~\ref{fig:simulated_property} show locations of the simulated properties. Table~\ref{tab:simulated_data} shows data for the first six simulated
+properties.
+<<,echo=FALSE,message=FALSE,results='asis'>>=
+library(xtable)
+df <- property.df[1:6,]
+names(df) <- c("Longitude", "Latitude", "Property Value")
+print(xtable(df, caption="Sample Simulated Property Data", 
+       label="tab:simulated_data"), include.rownames=FALSE)
+@
+
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=\textwidth]{../figures/base_property_locations.png}
     \caption{Simulated Property Locations}
     \label{fig:simulated_property}
 \end{figure}
+
 
 
 \subsection*{Storm Path Analysis}
