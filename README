@@ -1,1 +1,5 @@
 Workarea to learn about performaing geo-spatial analysis using R and related packages.
+
+Source data for this work:
+Census Bureau boundary files: http://www.census.gov/geo/maps-data/data/tiger-line.html
+National Hurricane Center: http://www.nhc.noaa.gov/gis/
