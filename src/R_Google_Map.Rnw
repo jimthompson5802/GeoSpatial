@@ -133,7 +133,17 @@ Steps taken for the storm are analysis.
     structure.
     \item State and County boundaries from the \href{http://www.census.gov/geo/maps-data/data/tiger-line.html}{Census Bureau} loaded into \textbf{SpatialPolygonsDataFrame} structures.
     \item Storm path data, which are provided as shapefile, from the 
-    \href{http://www.nhc.noaa.gov/gis/}{National Hurricane Center} loaded in \textbf{SpatialPolygonsDataFrame} structure.  Yellow area in Figure~\ref{fig:high-level-path} shows the 72-hour forecast for the possible areas that will be impacted by Hurricane Sandy.  Figure~\ref{fig:mid-level-path} shows possible impacted areas within the mid-Atlantic region.
+    \href{http://www.nhc.noaa.gov/gis/}{National Hurricane Center} (NHC) loaded in \textbf{SpatialPolygonsDataFrame} structure.  This code fragment reads the NHC 
+    storm path description into a R structure.
+<<,eval=FALSE>>=
+# retieve storm path shapefile
+storm.cone<-readShapeSpatial("../nhcdata/al182012_5day_025/al182012.025_5day_pgn.shp",
+                               proj4string = CRS("+proj=longlat +datum=WGS84"))
+@
+    Yellow area in Figure~\ref{fig:high-level-path} shows the 72-hour forecast 
+    for the possible areas that will be impacted by Hurricane Sandy.  
+    Figure~\ref{fig:mid-level-path} shows possible impacted areas within the 
+    mid-Atlantic region.
 
 
     \begin{figure}[htbp]
