@@ -153,7 +153,7 @@ Steps taken for the storm are analysis.
     determine whether or not an individual property is contained within the 
     storm path polygon structures.  
     Figure~\ref{fig:impacted-properties} shows areas in the Washington, D.C.
-area potentially in the path of Hurricane Sandy.  Properties in the hurricane path are show in red.  
+area potentially in the path of Hurricane Sandy.  Properties in the hurricane path are shown in red.  
 Out of the \Sexpr{property.count} properties in the study, we find that \Sexpr{property.count.at.risk} properties are in the projected storm path.  These properties account for 
 \$\Sexpr{format(property.value.at.risk,big.mark=",")} out of the total \$\Sexpr{format(property.value,big.mark=",")}. 
     \begin{figure}[htbp]
