@@ -185,11 +185,11 @@ Out of the \Sexpr{property.count} properties in the study, we find that \Sexpr{p
 
 \end{itemize}
 
-\section*{Appendix - Hurricane Path Analysis}
+\section*{Appendix - Hurricane Path Analysis (drawHurricanePath.R)}
 \lstinputlisting[language=R]{drawHurricanePath.R}
 \newpage
 
-\section*{Appendix - Generate Sample Property Data}
+\section*{Appendix - Generate Sample Property Data (generatePropertyTest.R)}
 \lstinputlisting[language=R]{../munge/generatePropertyTest.R}
 \newpage
 
