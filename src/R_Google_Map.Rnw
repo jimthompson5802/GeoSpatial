@@ -135,6 +135,7 @@ Steps taken for the storm are analysis.
     \item Storm path data, which are provided as shapefile, from the 
     \href{http://www.nhc.noaa.gov/gis/}{National Hurricane Center} loaded in \textbf{SpatialPolygonsDataFrame} structure.  Yellow area in Figure~\ref{fig:high-level-path} shows the 72-hour forecast for the possible areas that will be impacted by Hurricane Sandy.  Figure~\ref{fig:mid-level-path} shows possible impacted areas within the mid-Atlantic region.
 
+
     \begin{figure}[htbp]
         \centering
         \includegraphics[width=\maxwidth]{../figures/high-level_storm_path.png}
@@ -151,7 +152,16 @@ Steps taken for the storm are analysis.
     
     \item Function \textbf{over()} from the package \textbf{sp} provides a means to 
     determine whether or not an individual property is contained within the 
-    storm path polygon structures.  
+    polygon structures describing the storm path.  This code fragment peforms 
+    the test. For each point in the \textit{property.locations} the value of 
+    \textit{flag} will be
+    the polygon identifer in \textit{sp.storm}, which describe the storm path, 
+    containing the point or \textbf{NA} if none of the polygons contain the point.
+<<,eval=FALSE>>=
+# determine the properties in the storm path region
+flag <- over(property.locations,sp.storm)
+property.df$col <- factor(ifelse(!is.na(flag),"in","out"),levels=c("in","out"))
+@        
     Figure~\ref{fig:impacted-properties} shows areas in the Washington, D.C.
 area potentially in the path of Hurricane Sandy.  Properties in the hurricane path are shown in red.  
 Out of the \Sexpr{property.count} properties in the study, we find that \Sexpr{property.count.at.risk} properties are in the projected storm path.  These properties account for 
