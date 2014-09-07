@@ -14,7 +14,7 @@
    \begin{center}
       \Large\textbf{R and Google Maps}\\
       \large\textit{Jim Thompson}\\
-      \large{August 2014}
+      \large{September 7, 2014}
    \end{center}
    \vspace*{\stretch{2.0}}
 \end{titlepage}
@@ -185,8 +185,33 @@ Out of the \Sexpr{property.count} properties in the study, we find that \Sexpr{p
 
 \end{itemize}
 
+\subsection*{Wind Speed Forecast}
+<<,cache=FALSE,warning=FALSE,message=FALSE,echo=FALSE,results="hide">>=
+source("windForecastAnalysis.R",echo=TRUE)
+@
+In addition to storm path data, the NHC provides forecasts on expected wind strength.  The forecasts are intended to show the expected size of the storm and the areas potentially affected by sustained winds of tropical storm force (34 Knot), 50 knot and hurricane force (64 knot) from a tropical cyclone.
+
+Figure~\ref{fig:wind-forecast} shows the 36-hour forecast of wind speeds for Hurricane Sandy as of 
+October 28, 2012.  At this point in time, a large portion of the Northeast are expected
+to see tropical storm strength winds, with parts of Delaware, Maryland and New 
+Jersey shores expected to experience hurricane strength winds.  As in the storm path analysis, if there are geocode property data that contain
+longitude and latitude information, it is possible to determine the individual 
+properties that can be affected by wind strength.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.75\maxwidth]{../figures/wind_forecast.png}
+    \caption{36-hour Wind Forecast Regions, October 28, 2012}
+    \label{fig:wind-forecast}
+\end{figure}
+
+
+
 \section*{Appendix - Hurricane Path Analysis (drawHurricanePath.R)}
 \lstinputlisting[language=R]{drawHurricanePath.R}
+\newpage
+
+\section*{Appendix - Wind Forecast Analysis (windForecastAnalysis.R)}
+\lstinputlisting[language=R]{windForecastAnalysis.R}
 \newpage
 
 \section*{Appendix - Generate Sample Property Data (generatePropertyTest.R)}
