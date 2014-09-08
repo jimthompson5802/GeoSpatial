@@ -196,7 +196,7 @@ October 28, 2012.  At this point in time, a large portion of the Northeast are e
 to see tropical storm strength winds, with parts of Delaware, Maryland and New 
 Jersey shores expected to experience hurricane strength winds.  As in the storm path analysis, if there are geocode property data that contain
 longitude and latitude information, it is possible to determine the individual 
-properties that can be affected by wind strength.
+properties affected by wind strength.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.75\maxwidth]{../figures/wind_forecast.png}
