@@ -79,22 +79,22 @@ df$loan.id <- paste0("loan.",sample(10000,nrow(df)))
 counties.of.interest$idx <- 1:nrow(counties.of.interest)
 df<- merge(df,subset(counties.of.interest,select=c(idx,NAMELSAD)))
 
-this.map <-  get_map("prince william, va",9)
-county.boundaries <- cropToMap(this.map,counties.of.interest)
-
-
-ggmap(this.map) +
-    geom_point(aes(x=lon, y=lat), 
-               data=subset(df), 
-               color="red", shape=16, size=3) +
-    geom_polygon(aes(x=long, y=lat, group=id), 
-                 data=county.boundaries,
-                 color="blue",alpha=0) +
-    geom_text(aes(x=as.numeric(as.character(INTPTLON)), 
-                  y=as.numeric(as.character(INTPTLAT)), label=NAMELSAD),
-              data=attr(counties.of.interest,"data"),
-              size=3) +
-    theme_nothing()
+# this.map <-  get_map("prince william, va",9)
+# county.boundaries <- cropToMap(this.map,counties.of.interest)
+# 
+# 
+# ggmap(this.map) +
+#     geom_point(aes(x=lon, y=lat), 
+#                data=subset(df), 
+#                color="red", shape=16, size=3) +
+#     geom_polygon(aes(x=long, y=lat, group=id), 
+#                  data=county.boundaries,
+#                  color="blue",alpha=0) +
+#     geom_text(aes(x=as.numeric(as.character(INTPTLON)), 
+#                   y=as.numeric(as.character(INTPTLAT)), label=NAMELSAD),
+#               data=attr(counties.of.interest,"data"),
+#               size=3) +
+#     theme_nothing()
 
 # Save property locations for analysis
 property.df <- subset(df,select=-c(col,idx))
