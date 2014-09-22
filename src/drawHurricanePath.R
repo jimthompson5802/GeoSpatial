@@ -160,9 +160,9 @@ df2 <- ddply(property.df,.(NAMELSAD,col),summarize,value=sum(value),
 
 p1 <- ggplot(df2, aes(x = NAMELSAD, y = upb,fill=col)) +
     scale_fill_manual(name="Property Category",values=c("red","green")) +
-    scale_y_continuous(breaks=seq(0,4000000,500000),
+    scale_y_continuous(breaks=seq(0,4000000,1000000),
                        limits=c(0,4000000),
-                       labels=paste0("$",seq(0,4,0.5),"M"))+ 
+                       labels=paste0("$",seq(0,4,1),"M"))+ 
     geom_bar(stat='identity') +
     coord_flip()+
     xlab("Region") + ylab("UPB Value") +
@@ -171,9 +171,9 @@ p1 <- ggplot(df2, aes(x = NAMELSAD, y = upb,fill=col)) +
 
 p2 <- ggplot(df2, aes(x = NAMELSAD, y = value,fill=col)) +
     scale_fill_manual(name="Property Category",values=c("red","green")) +
-    scale_y_continuous(breaks=seq(0,4000000,500000),
+    scale_y_continuous(breaks=seq(0,4000000,1000000),
                        limits=c(0,4000000),
-                       labels=paste0("$",seq(0,4,0.5),"M"))+ 
+                       labels=paste0("$",seq(0,4,1),"M"))+ 
     geom_bar(stat='identity') +
     coord_flip()+
     xlab("Region") + ylab("Property Value") +
