@@ -90,7 +90,7 @@ source("../munge/generatePropertyTest.R",echo=TRUE)
 @
 
 \Sexpr{property.count} simulated properties were randomly placed in
-\Sexpr{length(attr(counties.of.interest,"polygons"))} Virginia administrative areas.  Property
+\Sexpr{length(attr(counties.of.interest,"polygons"))} Virginia counties.  Property
 values for the simulated properties are uniform pseudo-random values between \$50,000 and \$200,000.  Simulated loan UPB are uniform pseudo-random values between \$40,000 and \$150,000.  The total value of the simulate properties is \$\Sexpr{format(property.value,big.mark=",")} and total UPB is \$\Sexpr{format(upb.value,big.mark=",")}. Figure~\ref{fig:simulated_property} show locations of the simulated properties. Table~\ref{tab:simulated_data} shows data for the first six simulated
 properties.
 <<,echo=FALSE,message=FALSE,results='asis'>>=
