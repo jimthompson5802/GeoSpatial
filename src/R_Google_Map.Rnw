@@ -95,7 +95,7 @@ values for the simulated properties are uniform pseudo-random values between \$5
 properties.
 <<,echo=FALSE,message=FALSE,results='asis'>>=
 library(xtable)
-df <- property.df[1:6,]
+df <- property.df[sample(nrow(property.df),6),]
 names(df) <- c("Longitude", "Latitude", "Property Value", "UPB", "Loan Identifer","County")
 print(xtable(df, caption="Sample Simulated Property Data", 
        label="tab:simulated_data"), include.rownames=FALSE)
