@@ -170,11 +170,13 @@ storm.cone<-readShapeSpatial("../nhcdata/al182012_5day_025/al182012.025_5day_pgn
 <<,eval=FALSE>>=
 # determine the properties in the storm path region
 flag <- over(property.locations,sp.storm)
-property.df$col <- factor(ifelse(!is.na(flag),"In Storm Path","Not In Storm Path"),levels=c("In Storm Path","Not In Storm Path"))
+property.df$col <- factor(ifelse(!is.na(flag),
+                                 "In Storm Path","Not In Storm Path"),
+                          levels=c("In Storm Path","Not In Storm Path"))
 @        
     Figure~\ref{fig:impacted-properties} shows areas in the Washington, D.C.
 area potentially in the path of Hurricane Sandy.  Properties in the hurricane path are shown in red.  
-Out of the \Sexpr{property.count} properties in the study, we find that \Sexpr{property.count.at.risk} properties are in the projected storm path.  These properties account for 
+Out of the \Sexpr{property.count} properties in the study, we find \Sexpr{property.count.at.risk} properties are in the projected storm path.  These properties account for 
 \$\Sexpr{format(property.value.at.risk,big.mark=",")} out of the total \$\Sexpr{format(property.value,big.mark=",")} property value. In terms of UPB, the properties at 
 risk account for \$\Sexpr{format(upb.value.at.risk,big.mark=",")} UPB out of a total of  \$\Sexpr{format(upb.value,big.mark=",")}.  
 
@@ -185,15 +187,10 @@ risk account for \$\Sexpr{format(upb.value.at.risk,big.mark=",")} UPB out of a t
         \label{fig:impacted-properties}
     \end{figure}
     
-    \item Once the proprieties in the storm path are flagged, various
-    risk measures can be calculated.  For this example, the total property values
-    and UPB are calculated for those properties in the storm path.  Figure~\ref{fig:analytics1}
-    show these calculated measures by geographic region.  One benefit of using geospatial 
-    information is deriving a finer granularity of risk.  For example, instead of
-    making a county wide assumption of properties at risk, with the geocoded information
-    of properties, we can determine the subset of properties in the storm 
-    path.  Fauquier and Prince William counties in Figure~\ref{fig:analytics1} illustrate 
-    this capability.  
+    \item Instead of making a county wide assumption of properties at risk, 
+    with the geocoded information of properties, we can determine the subset of properties 
+    in the storm path for given region.  Fauquier and Prince William counties in 
+    Figure~\ref{fig:analytics1} illustrate this capability.   
     
         \begin{figure}[htbp]
         \centering

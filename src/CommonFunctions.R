@@ -29,6 +29,8 @@ cropToMap <- function(the.map,spatial.data) {
 }
 
 # Multiple plot function
+# based on code found at
+# http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_%28ggplot2%29/
 #
 # ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
 # - cols:   Number of columns in layout
