@@ -53,7 +53,7 @@ generatePropertyData <- function(sp, num.pts=5) {
     lon.pts <- runif(num.pts, bb["ll.lon"], bb["ur.lon"])
     lat.pts <- runif(num.pts, bb["ll.lat"], bb["ur.lat"])
     value <- runif(num.pts,50000,200000)
-    upb <- runif(num.pts,40000,150000)
+    upb <- runif(num.pts,20000,125000)
     
     invisible(cbind(lon=lon.pts,lat=lat.pts, value=value, upb=upb))
 }
@@ -100,4 +100,5 @@ df<- merge(df,subset(counties.of.interest,select=c(idx,NAMELSAD)))
 property.df <- subset(df,select=-c(col,idx))
 property.count <- nrow(property.df)
 property.value<- sum(floor(property.df$value))
+upb.value<- sum(floor(property.df$upb))
 save(property.df,file="../data/property_locations.RData")

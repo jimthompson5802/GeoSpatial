@@ -109,12 +109,15 @@ proj4string(sp.storm) <- CRS(proj4string(storm.path))
 
 # determine the properties in the storm path region
 flag <- over(property.locations,sp.storm)
-property.df$col <- factor(ifelse(!is.na(flag),"in","out"),levels=c("in","out"))
+property.df$col <- factor(ifelse(!is.na(flag),"In Storm Path","Not In Storm Path"),
+                          levels=c("In Storm Path","Not In Storm Path"))
 property.df$pch <- ifelse(!is.na(flag),"17","16")
 property.count <- length(flag)
 property.value<- sum(floor(property.df$value))
+upb.value <- sum(floor(property.df$upb))
 property.count.at.risk <- sum(!is.na(flag))
 property.value.at.risk <- sum(floor(property.df$value[is.na(flag)]))
+upb.value.at.risk <- sum(floor(property.df$upb[is.na(flag)]))
 
 
 # plot property locations
@@ -145,4 +148,38 @@ storm.map <- storm.map +
 
 png("../figures/affected_properties.png")
 print(storm.map)
+dev.off()
+
+
+# do analytics on propeties
+library(plyr)
+
+df2 <- ddply(property.df,.(NAMELSAD,col),summarize,value=sum(value),
+             upb=sum(upb))
+
+
+p1 <- ggplot(df2, aes(x = NAMELSAD, y = upb,fill=col)) +
+    scale_fill_manual(name="Property Category",values=c("red","green")) +
+    scale_y_continuous(breaks=seq(0,4000000,500000),
+                       limits=c(0,4000000),
+                       labels=paste0("$",seq(0,4,0.5),"M"))+ 
+    geom_bar(stat='identity') +
+    coord_flip()+
+    xlab("Region") + ylab("UPB Value") +
+    theme(axis.text.y=element_text(size=10),
+          axis.text.x=element_text(size=10))
+
+p2 <- ggplot(df2, aes(x = NAMELSAD, y = value,fill=col)) +
+    scale_fill_manual(name="Property Category",values=c("red","green")) +
+    scale_y_continuous(breaks=seq(0,4000000,500000),
+                       limits=c(0,4000000),
+                       labels=paste0("$",seq(0,4,0.5),"M"))+ 
+    geom_bar(stat='identity') +
+    coord_flip()+
+    xlab("Region") + ylab("Property Value") +
+    theme(axis.text.y=element_text(size=10),
+          axis.text.x=element_text(size=10))
+
+png("../figures/property_analytics1.png")
+multiplot(p1, p2, cols=1)
 dev.off()
